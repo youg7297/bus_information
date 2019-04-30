@@ -8,11 +8,15 @@ if(isset($_GET['tmp'])){
 if(isset($_GET['naf'])){
     $naf = $_GET['naf'];
 }
+
+$ServiceKey = "RGFGRkYlMkZ2Q0dwNFplc0VRcEJQWnloQjU5MXNvNXlma0RvdyUyQkI3MVRKVmhFZ2tWN2VTOTd0a0ZnbXByNXpTeEpJRXFWWXlEdDlMQkRiM0pxb1FsWFh3JTNEJTNE";// 암호화 문자열
+$ServiceKey = base64_decode($ServiceKey);
+
 //고유번호검색
 if($naf != "" && $tmp == "unique"){
 $ch = curl_init();
 $url = 'http://ws.bus.go.kr/api/rest/stationinfo/getStationByName'; /*URL*/
-$queryParams = '?' . urlencode('ServiceKey') . '=DaFFF%2FvCGp4ZesEQpBPZyhB591so5yfkDow%2BB71TJVhEgkV7eS97tkFgmpr5zSxJIEqVYyDt9LBDb3JqoQlXXw%3D%3D'; /*Service Key*/
+$queryParams = '?' . urlencode('ServiceKey') . '=' . $ServiceKey; /*Service Key*/
 $queryParams .= '&' . urlencode('stSrch') . '=' . urlencode($naf); /*정류소명 검색어*/
 
 curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
@@ -43,7 +47,7 @@ foreach($obj->msgBody->itemList as $val){
 for($i = 0; $i < $total; $i++){
     echo "<p>정류소 고유번호 : <a href='index.php?tmp=arrival&naf=$arsIdArr[$i]'>" . $arsIdArr[$i] ."</a></p>";
     echo "<p>정류소 이름 : " . $stNmArr[$i] ."</p>";
-    echo "<p>--------------------------------------</p>";
+    echo "<div class='line'></div>";
 }
 
 }
@@ -116,3 +120,6 @@ if($naf != "" && $tmp == "arrival"){
 ?>
 
 
+<script>
+console.log("DaFFF%2FvCGp4ZesEQpBPZyhB591so5yfkDow%2BB71TJVhEgkV7eS97tkFgmpr5zSxJIEqVYyDt9LBDb3JqoQlXXw%3D%3D");
+    </script>
